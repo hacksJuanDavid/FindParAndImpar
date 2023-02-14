@@ -6,13 +6,14 @@ export default function Home() {
   const [numbers, setNumbers] = useState<number[]>([]);
   const [impars, setImpars] = useState<number[]>([]);
   const [par, setPar] = useState<number[]>([]);
+  const [error, setError] = useState<boolean>(false);
 
   //HandleChange input
   const HandleChange = (e: any) => {
     //code ejecuted when input change value to time 1000ms
     setTimeout(() => {
       //calculate porcentage rewars
-      CalculatePrimeAndPar(
+      CalculateImparAndPar(
         //parse data to number
         parseInt(e.target.value)
       );
@@ -21,24 +22,30 @@ export default function Home() {
     }, 1000);
   };
 
-  //calculate prime and par
-  const CalculatePrimeAndPar = (number: number) => {
+  //calculate impar and par
+  const CalculateImparAndPar = (number: number) => {
     //if number in range 20 to 35 calculate prime and par
     if (number >= 20 && number <= 35) {
       //create array
       let array: number[] = [];
 
-      //create array with numbers
-      for (let i = 0; i <= number; i++) {
+      //create array with numbers loop for
+      //for (let i = 0; i <= number; i++) {
+      //  array.push(i);
+      //}
+
+      //create array with numbers loop while
+      let i = 0;
+      while (i <= number) {
         array.push(i);
+        i++;
       }
+
       //filter array with impars numbers
       let imparsNumbers = array.filter((number) => number % 2 !== 0);
 
       //filter array with par numbers
-      const parNumbers = array.filter((number) => {
-        return number % 2 === 0;
-      });
+      let parNumbers = array.filter((number) => number % 2 === 0);
 
       //set data to state
       setImpars(imparsNumbers);
@@ -52,6 +59,7 @@ export default function Home() {
       //set data to state
       setImpars([]);
       setPar([]);
+      setError(true);
     }
   };
 
@@ -115,6 +123,12 @@ export default function Home() {
                     impars.toString().replace(/,/g, " ")
                   }
                 </div>
+                {error && (
+                  <div className="stat-title text-error">
+                    ¡Input range to 20 to 35!
+                  </div>
+                 )
+                }
               </div>
 
               <div className="stat">
@@ -140,6 +154,12 @@ export default function Home() {
                     par.toString().replace(/,/g, " ")
                   }
                 </div>
+                {error && (
+                  <div className="stat-title text-error">
+                    ¡Input range to 20 to 35!
+                  </div>
+                 )
+                }
               </div>
             </div>
           </div>
